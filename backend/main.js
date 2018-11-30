@@ -10,8 +10,8 @@ const http = require('http');
 //routers
 const indexRouter = (require(path.join(__dirname, 'routes/index.js')));
 
-//const privateKey = fs.readFileSync('/etc/letsencrypt/live/bartor.net/privkey.pem', 'utf8');
-//const certificate = fs.readFileSync('/etc/letsencrypt/live/bartor.net/fullchain.pem', 'utf8');
+//const privateKey = fs.readFileSync('/path/to/private/key', 'utf8');
+//const certificate = fs.readFileSync('/path/to/full/chain', 'utf8');
 
 //const credentials = {
 //    key: privateKey,
