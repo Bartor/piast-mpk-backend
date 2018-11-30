@@ -22,6 +22,10 @@ create table if not exists piastmpk.stopline (
     foreign key (line_id) references piastmpk.lines (id)
     on delete cascade
     on update restrict
+  constraint `stop_key`
+    foreign key (stop_id) references piastmpk.stops (id)
+    on delete cascade
+    on update restrict
 );
 
 create table if not exists piastmpk.accidents (
