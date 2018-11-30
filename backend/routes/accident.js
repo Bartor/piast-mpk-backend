@@ -1,13 +1,21 @@
 const express = require('express');
 const router = express.Router();
 
-const db = require('../handlers/db.js');
 
 router.get('/', (req, res) => {
-    res.json({
-        id: 666,
-        
-    });
+
+});
+
+router.post('/', (req, res) => {
+
+});
+
+router.get('/:id', (req, res) => {
+
+});
+
+router.patch('/:id', (req, res) => {
+
 });
 
 module.exports = router;

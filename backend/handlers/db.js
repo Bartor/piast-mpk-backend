@@ -1,16 +1,16 @@
 const mariadb = require('mariadb');
-const credentials = JSON.parse(require('fs').readFileSync('../tokens/dbCredentials.json'));
+const credentials = JSON.parse(require('fs').readFileSync('tokens/dbCredentials.json'));
 
 
 const pool = mariadb.createPool({
     host: credentials.host,
+    port: credentials.port,
     user: credentials.user,
-    password: credentials.password,
-    connectionLimit: credentials.connectionLimit
+    password: credentials.password
 });
 
 pool.getConnection().then(conn => {
-    print("DB connected");
+    console.log("DB connected");
 });
 
 module.exports = {
