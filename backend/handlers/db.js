@@ -27,11 +27,13 @@ module.exports = {
                 //do something with the rows and return it
             }).catch(err => {
                 conn.close();
-                throw err;
+                console.log(err.stack);
+                return null;
             });
         }).catch(err => {
             conn.close();
-            throw err;
+            console.log(err.stack);
+            return null
         });
     },
     //TODOs
