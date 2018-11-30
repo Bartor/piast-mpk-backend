@@ -1,7 +1,9 @@
 version: '3'
 services:
   piast-db:
-    
+    image: mariadb-10.4
+    ports:
+      3306:3306
   piast-backend:
     build: ./backend
     ports:
