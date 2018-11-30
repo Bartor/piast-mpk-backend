@@ -1,12 +1,14 @@
 version: '3'
 services:
-  piast-db:
-    image: mariadb-10.4
-    ports:
-      3306:3306
   piast-backend:
     build: ./backend
     ports:
-      - 80:3000
+      - 2137:2137
+    volumes:
+      - ./backend/:/usr/src/app
     depends_on:
-      - piast_db
+      - piast-db
+  piast-db:
+    image: mariadb:10.4
+    ports:
+      - 3306:3306
