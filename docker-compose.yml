@@ -9,6 +9,10 @@ services:
     depends_on:
       - piast-db
   piast-db:
-    image: mariadb:10.4
+    build: ./database
     ports:
       - 3306:3306
+    volumes:
+      - ./database/data:/var/lib/mysql
+    environment:
+      - MYSQL_ROOT_PASSWORD=test
