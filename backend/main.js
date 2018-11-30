@@ -8,8 +8,8 @@ const http = require('http');
 //const https = require('https');
 
 //routers
-const indexRouter = require('routes/index.js');
-const userRouter = require('routes/user.js');
+const indexRouter = require('./routes/index.js');
+const userRouter = require('./routes/user.js');
 
 //const privateKey = fs.readFileSync('/path/to/private/key', 'utf8');
 //const certificate = fs.readFileSync('/path/to/full/chain', 'utf8');
