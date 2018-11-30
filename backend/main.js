@@ -1,5 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const bearerToken = require('express-bearer-token');
+
 const fs = require('fs');
 
 const path = require('path');
@@ -21,6 +23,7 @@ const indexRouter = (require(path.join(__dirname, 'routes/index.js')));
 let app = express();
 
 app.use(bodyParser.json());
+app.use(bearerToken());
 
 app.use('/', indexRouter);
 
