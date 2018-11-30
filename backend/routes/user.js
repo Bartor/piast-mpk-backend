@@ -3,8 +3,7 @@ const router = express.Router();
 
 
 router.get('/', (req, res) => {
-    console.log('Token: ' + req.token);
-    res.send('xD');
+    res.send('Token: ' + req.token);    
 });
 
 module.exports = router;
