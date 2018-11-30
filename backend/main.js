@@ -1,14 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
-const fs = require('fs');
+const bearerToken = require('express-bearer-token');
 
-const path = require('path');
+const fs = require('fs');
 
 const http = require('http');
 //const https = require('https');
 
 //routers
-const indexRouter = (require(path.join(__dirname, 'routes/index.js')));
+const indexRouter = require('./routes/index.js');
+const userRouter = require('./routes/user.js');
 
 //const privateKey = fs.readFileSync('/path/to/private/key', 'utf8');
 //const certificate = fs.readFileSync('/path/to/full/chain', 'utf8');
@@ -21,8 +22,10 @@ const indexRouter = (require(path.join(__dirname, 'routes/index.js')));
 let app = express();
 
 app.use(bodyParser.json());
+app.use(bearerToken());
 
 app.use('/', indexRouter);
+app.use('/user', userRouter);
 
 // const httpServer = http.createServer((req, res) => {
 //     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
