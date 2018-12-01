@@ -41,8 +41,8 @@ module.exports = {
     }, //(int, bool)
     addAccident: function(accident, cb) {
         conn.query(
-            `INSERT INTO accidents (stopline, FROM_UNIXTIME(time), user, description)
-                VALUES (?, ?, ?, ?)`,
+            `INSERT INTO accidents (stopline, time, user, description)
+                VALUES (?, FROM_UNIXTIME(?), ?, ?)`,
             [accident.stopline, accident.time, accident.user, accident.desctiption],
             cb
         )
@@ -77,8 +77,8 @@ module.exports = {
     },
     addInspection: function(inspection, cb) {
         conn.query(
-            `INSERT INTO inspections (stopline, FROM_UNIXTIME(time), user)
-                VALUES (?, ?, ?)`,
+            `INSERT INTO inspections (stopline, time, user)
+                VALUES (?, FROM_UNIXTIME(?), ?)`,
             [inspection.stopline, inspection.time, inspection.user],
             cb
         )
