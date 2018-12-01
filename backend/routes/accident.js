@@ -17,6 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body) {
+        console.log(req.body);
         db.addAccident(new Accident(1, 2, 'xD!'), (err, rows) => {
             if (err) {
                 console.log(err.stack);
