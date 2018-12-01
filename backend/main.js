@@ -10,6 +10,9 @@ const http = require('http');
 //routers
 const indexRouter = require('./routes/index.js');
 const userRouter = require('./routes/user.js');
+const accidentRouter = require('./routes/accident.js');
+const inspectionRouter = require('./routes/inspection.js');
+const scheduleRouter = require('./routes/schedule.js');
 
 //const privateKey = fs.readFileSync('/path/to/private/key', 'utf8');
 //const certificate = fs.readFileSync('/path/to/full/chain', 'utf8');
@@ -26,6 +29,9 @@ app.use(bearerToken());
 
 app.use('/', indexRouter);
 app.use('/user', userRouter);
+app.use('/accident', accidentRouter);
+app.use('/inspection', inspectionRouter);
+app.use('/schedule', scheduleRouter);
 
 // const httpServer = http.createServer((req, res) => {
 //     res.writeHead(301, { "Location": "https://" + req.headers['host'] + req.url });
