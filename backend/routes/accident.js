@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
             return;
         }
         auth.verifyToken(req.token).then(output => {
-            db.addAccident(new Accident(req.body.stop_line_id, req.body.direction, u.uid, req.description), (err, rows) => {
+            db.addAccident(new Accident(req.body.stop_line_id, req.body.direction, output.uid, req.body.description), (err, rows) => {
                 if (err) {
                     console.log(err.stack);
                     res.status(500).send();

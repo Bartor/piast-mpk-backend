@@ -4,11 +4,11 @@ const router = express.Router();
 const db = require('../handlers/db.js');
 const Inspection = require('../types/inspection.js');
 
-const auth = require('../handlers/auth.js');
+const auth = require('../handlers/mauth.js');
 
 router.get('/', (req, res) => {
     auth.verifyToken(req.token).then(output => {
-        db.fetchAccidents((err, rows) => {
+        db.fetchInspections((err, rows) => {
             if (err) {
                 console.log(err.stack);
                 res.status(500).send();
@@ -29,7 +29,7 @@ router.post('/', (req, res) => {
             return;
         }
         auth.verifyToken(req.token).then(output => {
-            db.addAccident(new Inspection(req.body.stop_line_id, req.body.direction, u.uid), (err, rows) => {
+            db.addInspection(new Inspection(req.body.stop_line_id, req.body.direction, output.uid), (err, rows) => {
                 if (err) {
                     console.log(err.stack);
                     res.status(500).send();
@@ -53,7 +53,7 @@ router.get('/:id', (req, res) => {
             return;
         }
         auth.verifyToken(req.token).then(output => {
-            db.fetchAccident(req.params.id, (err, rows) => {
+            db.fetchInspection(req.params.id, (err, rows) => {
                 if (err) {
                     console.log(err.stack);
                     res.status(500).send();
@@ -80,7 +80,7 @@ router.patch('/:id', (req, res) => {
             return;
         }
         auth.verifyToken(req.token).then(output => {
-            db.voteForAccident(req.params.id, req.body.rating, (err, rows) => {
+            db.voteForInspection(req.params.id, req.body.rating, (err, rows) => {
                 if (err) {
                     console.log(err.stack);
                     res.status(500).send();

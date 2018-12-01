@@ -1,13 +1,15 @@
-const mariadb = require('mariadb/callback');
+const mysql = require('mysql');
 const credentials = JSON.parse(require('fs').readFileSync('tokens/dbCredentials.json'));
 
-const conn = mariadb.createConnection({
+const conn = mysql.createConnection({
     host: credentials.host,
     port: credentials.port,
     user: credentials.user,
     database: credentials.database,
     password: credentials.password
 });
+
+conn.connect();
 
 conn.query('SHOW TABLES;', (err, rows) => {
     if(err) console.log(err);
@@ -18,18 +20,18 @@ module.exports = {
     fetchAccidents: function(cb) {
         conn.query(
             `SELECT * FROM piastmpk.accidents 
-                WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
+                WHERE -TIMESTAMPDIFF(MINUTE, NOW(), time) < 60`,
             cb
         );
     },
     //TODOs
     fetchAccident: function(accidentId, cb) {
         conn.query(
-            `SELECT * FROM piastmpk.accidents a
-                JOIN stopline sl ON a.stopline=sl.id
-                JOIN line l ON sl.line_id=l.id
-                JOIN stop s ON sl.stop_id=s.id
-                WHERE id=?
+            `SELECT * FROM piastmpk.accidents AS a
+                JOIN piastmpk.stopline sl ON a.stopline=sl.id
+                JOIN piastmpk.lines l ON sl.line_id=l.id
+                JOIN piastmpk.stops s ON sl.stop_id=s.id
+                WHERE a.id=?
             `,
             [accidentId],
             cb
@@ -37,8 +39,7 @@ module.exports = {
     },
     voteForAccident: function(accidentId, up, cb) {
         conn.query(
-            `UPDATE piastmpk.accidents SET rate = rate + (?) 
-                WHERE id=?`,
+            `UPDATE piastmpk.accidents SET rate = rate + (?) WHERE id=?`,
             [up, accidentId],
             cb
         )
@@ -56,18 +57,17 @@ module.exports = {
     fetchInspections: function(cb) {
         conn.query(
             `SELECT * FROM piastmpk.inspection
-                WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
+                WHERE -TIMESTAMPDIFF(MINUTE, NOW(), time) < 10`,
             cb
         )
     },
     fetchInspection: function(inspectionId, cb) {
         conn.query(
             `SELECT * FROM piastmpk.inspection a
-                JOIN stopline sl ON a.stopline=sl.id
-                JOIN line l ON sl.line_id=l.id
-                JOIN stop s ON sl.stop_id=s.id
-                WHERE id=?
-            `,
+                JOIN piastmpk.stopline sl ON a.stopline=sl.id
+                JOIN piastmpk.lines l ON sl.line_id=l.id
+                JOIN piastmpk.stops s ON sl.stop_id=s.id
+                WHERE a.id=?`,
             [inspectionId],
             cb
         );

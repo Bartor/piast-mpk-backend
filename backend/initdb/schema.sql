@@ -37,7 +37,7 @@ create table if not exists piastmpk.accidents (
 create table if not exists piastmpk.inspection (
   id int not null auto_increment primary key,
   stopline int not null,
-  rate int,
+  rate int default 0,
   time datetime,
   user_id varchar(255) not null
 );
