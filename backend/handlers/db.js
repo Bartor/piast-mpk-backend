@@ -48,7 +48,7 @@ module.exports = {
         conn.query(
             `INSERT INTO piastmpk.accidents (stopline, time, user_id, description)
                 VALUES (?, FROM_UNIXTIME(?), ?, ?)`,
-            [accident.stopline, accident.time, accident.user, accident.desctiption],
+            [accident.stopline, accident.time, accident.user, accident.description],
             cb
         )
     }, //(object)
