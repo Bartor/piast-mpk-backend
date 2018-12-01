@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body) {
-        db.addAccident(new Accident(1, 2, "XDDDDDDDDDDDDDDD"), (err, rows) => {
+        db.addAccident(new Accident(1, 2, 'xD!'), (err, rows) => {
             if (err) {
                 console.log(err.stack);
                 res.status(500).send();
