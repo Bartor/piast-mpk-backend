@@ -1,7 +1,7 @@
 class Inspection {
     constructor(stopline, user) {
         this.stopline = stopline;
-        this.time = new Date().getTime();
+        this.time = Math.round(new Date()/1000);
         this.user = user;
     }
 }
