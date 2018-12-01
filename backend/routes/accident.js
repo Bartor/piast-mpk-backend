@@ -24,12 +24,12 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body) {
-        if (!req.body.stop_line_id || !req.body.description) {
-            res.status(400).send('stopline and description in body required');
+        if (!req.body.stop_line_id || !req.body.description || !req.body.direction) {
+            res.status(400).send('stop_line_id, description and direction in body required');
             return;
         }
         auth.verifyToken(req.token).then(output => {
-            db.addAccident(new Accident(req.body.stop_line_id, u.uid, req.description), (err, rows) => {
+            db.addAccident(new Accident(req.body.stop_line_id, req.body.direction, u.uid, req.description), (err, rows) => {
                 if (err) {
                     console.log(err.stack);
                     res.status(500).send();
