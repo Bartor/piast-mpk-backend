@@ -33,8 +33,7 @@ module.exports = {
           }, 3600000);
           return resolve(user);
         } catch(err) {
-          console.log(err);
-          return reject(null);
+          return reject(err);
         }
       });
     }
