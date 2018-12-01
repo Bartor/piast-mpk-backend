@@ -17,7 +17,7 @@ router.get('/', (req, res) => {
             }
         });
     }).catch(err => {
-        console.log(err);
+        console.log(err.message);
         res.status(401).send();
     });
 });
@@ -39,7 +39,7 @@ router.post('/', (req, res) => {
                 }
             });
         }).catch(err => {
-            console.log(err);
+            console.log(err.message);
             res.status(401).send();
         });
     } else {
@@ -90,7 +90,7 @@ router.patch('/:id', (req, res) => {
                 }
             });
         }).catch(err => {
-            console.log(err);
+            console.log(err.messag);
             res.status(401).send();
         });
     } else {
