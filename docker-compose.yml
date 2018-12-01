@@ -10,7 +10,7 @@ services:
       - piast-db
   piast-db:
     build: ./database
-    ports:
-      - 3306:3306
+    #ports:
+    #  - 3306:3306
     volumes:
       - ./database/data:/var/lib/mysql
