@@ -7,11 +7,12 @@ router.get('/', (req, res) => {
     if (req.token === undefined) {
         res.status(400).send('expected \'Authorization\' header');
     } else {
-        if (auth.verifyToken(req.token)) {
+        auth.verifyToken(req.token).then(output => {
             res.status(200).send();
-        } else {
-            res.status(401).send('provided token seems to be invalid');
-        }
+        }).catch(err => {
+            console.log(err);
+            res.status(401).send();
+        });
     }
 });
 
