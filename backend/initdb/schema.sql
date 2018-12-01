@@ -33,10 +33,6 @@ create table if not exists piastmpk.accidents (
   time datetime,
   user_id int not null,
   description varchar(255) not null,
-  constraint `stopline_key`
-    foreign key (stopline) references piastmpk.stopline (id)
-    on delete cascade
-    on update restrict
 );
 create table if not exists piastmpk.inspection (
   id int not null auto_increment primary key,
@@ -44,10 +40,6 @@ create table if not exists piastmpk.inspection (
   rate int,
   time datetime,
   user_id int not null,
-  constraint `stopline_fkey`
-    foreign key (stopline) references piastmpk.stopline (id)
-    on delete cascade
-    on update restrict
 );
 create view if not exists ordered_stopline as
   select * from stopline group by line_id order by ord;
