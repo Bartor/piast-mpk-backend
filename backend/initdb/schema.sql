@@ -32,14 +32,14 @@ create table if not exists piastmpk.accidents (
   rate int default 0,
   time datetime,
   user_id int not null,
-  description varchar(255) not null,
+  description varchar(255) not null
 );
 create table if not exists piastmpk.inspection (
   id int not null auto_increment primary key,
   stopline int not null,
   rate int,
   time datetime,
-  user_id int not null,
+  user_id int not null
 );
 create view if not exists ordered_stopline as
   select * from stopline group by line_id order by ord;

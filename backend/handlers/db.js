@@ -9,6 +9,11 @@ const conn = mariadb.createConnection({
     password: credentials.password
 });
 
+conn.query('SHOW TABLES;', (err, rows) => {
+    if(err) console.log(err);
+    console.log(rows);
+});
+
 module.exports = {
     fetchAccidents: function(cb) {
         conn.query(
@@ -82,5 +87,24 @@ module.exports = {
             [inspection.stopline, inspection.time, inspection.user],
             cb
         )
+    },
+    
+    fetchLine: function(cb) {
+        conn.query(
+            `SELECT * FROM line`,
+            cb
+        );
+    },
+    fetchStop: function(cb) {
+        conn.query(
+            `SELECT * FROM stop`,
+            cb
+        );
+    },
+    fetchLineStop: function(cb) {
+        conn.query(
+            `SELECT * FROM stopline`,
+            cb
+        );
     }
 };
