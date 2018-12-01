@@ -50,14 +50,14 @@ module.exports = {
 
     fetchInspections: function(cb) {
         conn.query(
-            `SELECT * FROM inspections 
+            `SELECT * FROM inspection
                 WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
             cb
         )
     },
     fetchInspection: function(inspectionId, cb) {
         conn.query(
-            `SELECT * FROM inspections a
+            `SELECT * FROM inspection a
                 JOIN stopline sl ON a.stopline=sl.id
                 JOIN line l ON sl.line_id=l.id
                 JOIN stop s ON sl.stop_id=s.id
@@ -77,7 +77,7 @@ module.exports = {
     },
     addInspection: function(inspection, cb) {
         conn.query(
-            `INSERT INTO inspections (stopline, time, user)
+            `INSERT INTO inspection (stopline, time, user)
                 VALUES (?, FROM_UNIXTIME(?), ?)`,
             [inspection.stopline, inspection.time, inspection.user],
             cb
