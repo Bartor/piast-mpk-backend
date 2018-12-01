@@ -14,7 +14,7 @@ module.exports = {
       return new Promise(async function(resolve, reject) {
         for (let u of that.cachedUsers) {
           if (u.token === token) {
-            return resolve(true);
+            return resolve(u);
           }
         }
         try {
@@ -31,10 +31,10 @@ module.exports = {
               }
             }
           }, 3600000);
-          return resolve(true);
+          return resolve(user);
         } catch(err) {
           console.log(err);
-          return reject(false);
+          return reject(null);
         }
       });
     }

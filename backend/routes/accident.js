@@ -4,6 +4,8 @@ const router = express.Router();
 const db = require('../handlers/db.js');
 const Accident = require('../types/accident.js');
 
+const auth = require('../handlers/auth.js');
+
 router.get('/', (req, res) => {
     db.fetchAccidents((err, rows) => {
         if (err) {
@@ -17,14 +19,22 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body) {
-        console.log(req.body);
-        db.addAccident(new Accident(1, 2, 'xD!'), (err, rows) => {
-            if (err) {
-                console.log(err.stack);
-                res.status(500).send();
-            } else {
-                res.json(rows);
-            }
+        if (!req.body.stopline && req.body.description) {
+            res.status(400).send('stopline and description in body required');
+            return;
+        }
+        auth.verifyToken(req.token).then(output => {
+            db.addAccident(new Accident(req.body.stopline, u.uid, req.description), (err, rows) => {
+                if (err) {
+                    console.log(err.stack);
+                    res.status(500).send();
+                } else {
+                    res.json(rows);
+                }
+            });
+        }).catch(err => {
+            console.log(err);
+            res.status(401).send();
         });
     } else {
         res.status(400).send('Content-Type should be application/json');   
