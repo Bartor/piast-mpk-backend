@@ -1,8 +1,7 @@
 class Accident {
-    constructor(stopline, rate, time, user, description) {
+    constructor(stopline, user, description) {
         this.stopline = stopline;
-        this.rate = rate;
-        this.time = time;
+        this.time = new Date().getTime();
         this.user = user;
         this.description = description;
     }
