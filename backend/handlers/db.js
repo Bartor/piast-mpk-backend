@@ -17,7 +17,7 @@ conn.query('SHOW TABLES;', (err, rows) => {
 module.exports = {
     fetchAccidents: function(cb) {
         conn.query(
-            `SELECT * FROM accidents 
+            `SELECT * FROM piastmpk.accidents 
                 WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
             cb
         );
@@ -25,7 +25,7 @@ module.exports = {
     //TODOs
     fetchAccident: function(accidentId, cb) {
         conn.query(
-            `SELECT * FROM accidents a
+            `SELECT * FROM piastmpk.accidents a
                 JOIN stopline sl ON a.stopline=sl.id
                 JOIN line l ON sl.line_id=l.id
                 JOIN stop s ON sl.stop_id=s.id
@@ -37,7 +37,7 @@ module.exports = {
     },
     voteForAccident: function(accidentId, up, cb) {
         conn.query(
-            `UPDATE accidents SET rate = rate + (?) 
+            `UPDATE piastmpk.accidents SET rate = rate + (?) 
                 WHERE id=?`,
             [up, accidentId],
             cb
@@ -46,7 +46,7 @@ module.exports = {
     }, //(int, bool)
     addAccident: function(accident, cb) {
         conn.query(
-            `INSERT INTO accidents (stopline, time, user_id, description)
+            `INSERT INTO piastmpk.accidents (stopline, time, user_id, description)
                 VALUES (?, FROM_UNIXTIME(?), ?, ?)`,
             [accident.stopline, accident.time, accident.user, accident.desctiption],
             cb
@@ -55,14 +55,14 @@ module.exports = {
 
     fetchInspections: function(cb) {
         conn.query(
-            `SELECT * FROM inspection
+            `SELECT * FROM piastmpk.inspection
                 WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
             cb
         )
     },
     fetchInspection: function(inspectionId, cb) {
         conn.query(
-            `SELECT * FROM inspection a
+            `SELECT * FROM piastmpk.inspection a
                 JOIN stopline sl ON a.stopline=sl.id
                 JOIN line l ON sl.line_id=l.id
                 JOIN stop s ON sl.stop_id=s.id
@@ -74,7 +74,7 @@ module.exports = {
     },
     voteForInspection: function(inspectionId, up, cb) {
         conn.query(
-            `UPDATE accidents SET rate = rate + (?) 
+            `UPDATE piastmpk.accidents SET rate = rate + (?) 
                 WHERE id=?`,
             [up, inspectionId],
             cb
@@ -82,7 +82,7 @@ module.exports = {
     },
     addInspection: function(inspection, cb) {
         conn.query(
-            `INSERT INTO inspection (stopline, time, user_id)
+            `INSERT INTO piastmpk.inspection (stopline, time, user_id)
                 VALUES (?, FROM_UNIXTIME(?), ?)`,
             [inspection.stopline, inspection.time, inspection.user],
             cb
@@ -91,19 +91,19 @@ module.exports = {
     
     fetchLine: function(cb) {
         conn.query(
-            `SELECT * FROM lines`,
+            `SELECT * FROM piastmpk.lines`,
             cb
         );
     },
     fetchStop: function(cb) {
         conn.query(
-            `SELECT * FROM stops`,
+            `SELECT * FROM piastmpk.stops`,
             cb
         );
     },
     fetchLineStop: function(cb) {
         conn.query(
-            `SELECT * FROM stopline`,
+            `SELECT * FROM piastmpk.stopline`,
             cb
         );
     }
