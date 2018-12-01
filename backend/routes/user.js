@@ -10,7 +10,7 @@ router.get('/', (req, res) => {
         auth.verifyToken(req.token).then(output => {
             res.status(200).send();
         }).catch(err => {
-            console.log(err);
+            console.log(err.message);
             res.status(401).send();
         });
     }

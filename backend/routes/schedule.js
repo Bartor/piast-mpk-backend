@@ -19,7 +19,7 @@ router.get('/stop', (req, res) => {
             });
 
         }).catch(err => {
-            console.log(err);
+            console.log(err.message);
             res.status(401).send();
         });
     }
@@ -40,7 +40,7 @@ router.get('/line', (req, res) => {
             });
 
         }).catch(err => {
-            console.log(err);
+            console.log(err.message);
             res.status(401).send();
         });
     }
@@ -61,7 +61,7 @@ router.get('/stopline', (req, res) => {
             });
 
         }).catch(err => {
-            console.log(err);
+            console.log(err.message);
             res.status(401).send();
         });
     }
