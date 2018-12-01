@@ -24,7 +24,7 @@ router.get('/', (req, res) => {
 
 router.post('/', (req, res) => {
     if (req.body) {
-        if (!req.body.stop_line_id || !req.body.description || !req.body.direction) {
+        if (!req.body.hasOwnProperty('stop_line_id') || !req.body.hasOwnProperty('direction')) {
             res.status(400).send('stopline, description and direction in body required');
             return;
         }
@@ -75,7 +75,7 @@ router.patch('/:id', (req, res) => {
         if(!req.params.id) {
             res.status(400).send('/id is required');
             return;
-        } else if (!req.body.rating || Math.abs(req.body.rating) != 1) {
+        } else if (!req.body.hasOwnProperty('rating') || Math.abs(req.body.rating) != 1) {
             res.status(400).send('rating in body in value of -1 or 1 is required');
             return;
         }
