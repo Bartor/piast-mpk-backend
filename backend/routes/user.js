@@ -1,10 +1,19 @@
 const express = require('express');
 const router = express.Router();
 
+const auth = require('../handlers/auth.js');
 
 router.get('/', (req, res) => {
-    console.log('Token: ' + req.token);
-    res.send('xD');
+    if (req.token === undefined) {
+        res.status(400).send('expected \'Authorization\' header');
+    } else {
+        auth.verifyToken(req.token).then(output => {
+            res.status(200).send();
+        }).catch(err => {
+            console.log(err);
+            res.status(401).send();
+        });
+    }
 });
 
 module.exports = router;

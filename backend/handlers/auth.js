@@ -1,6 +1,6 @@
 const admin = require('firebase-admin');
 
-const serviceAccount = require('tokens/firebaseServiceAccountKey.json');
+const serviceAccount = JSON.parse(require('fs').readFileSync('tokens/firebaseServiceAccountKey.json'));
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
@@ -8,13 +8,34 @@ admin.initializeApp({
 });
 
 module.exports = {
-    cachedUsers: {},
+    cachedUsers: [],
     verifyToken: function(token) {
-        admin.auth().verifyIdToken(token).then(decodedToken => {
-            return decodedToken;
-        }).catch(err => {
-            console.log(err.stack);
-            return null;
-        });
+      let that = this;
+      return new Promise(async function(resolve, reject) {
+        for (let u of that.cachedUsers) {
+          if (u.token === token) {
+            return resolve(true);
+          }
+        }
+        try {
+          let decodedToken = await admin.auth().verifyIdToken(token);
+          let user = await admin.auth().getUser(decodedToken.uid);
+          user.exp = decodedToken.exp;
+          user.token = token;
+          that.cachedUsers.push(user);
+          setTimeout((token) => {
+            for(let i = 0; i < that.cachedUsers.length; i++) {
+              if (that.cachedUsers[i].token === token) {
+                that.cachedUsers.splice(i, 0);
+                break;
+              }
+            }
+          }, 3600000);
+          return resolve(true);
+        } catch(err) {
+          console.log(err);
+          return reject(false);
+        }
+      });
     }
 };
