@@ -18,11 +18,13 @@ let queries = script.split(';');
 
 pool.getConnection().then(c => {
   for (let query of queries) {
+    console.log(query);
     c.query(query).then(rows => {
       console.log("successful");
+    }).catch(err => {
+      console.log(err);
     });
   }
-  c.close();
 });
 
 
