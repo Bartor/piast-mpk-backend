@@ -71,7 +71,7 @@ module.exports = {
         conn.query(
             `UPDATE accidents SET rate = rate + (?) 
                 WHERE id=?`,
-            [up, accidentId],
+            [up, inspectionId],
             cb
         )
     },
@@ -79,7 +79,7 @@ module.exports = {
         conn.query(
             `INSERT INTO inspections (stopline, FROM_UNIXTIME(time), user)
                 VALUES (?, ?, ?)`,
-            [accident.stopline, accident.time, accident.user],
+            [inspection.stopline, inspection.time, inspection.user],
             cb
         )
     }
