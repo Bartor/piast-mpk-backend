@@ -1,7 +1,7 @@
-const mariadb = require('mariadb');
+const mariadb = require('mariadb/callback');
 const credentials = JSON.parse(require('fs').readFileSync('tokens/dbCredentials.json'));
 
-const pool = mariadb.createPool({
+const conn = mariadb.createConnection({
     host: credentials.host,
     port: credentials.port,
     user: credentials.user,
@@ -9,40 +9,21 @@ const pool = mariadb.createPool({
     password: credentials.password
 });
 
-pool.getConnection().then(conn => {
-    console.log("DB connected");
-    conn.query("SHOW TABLES").then(rows => {
-        console.log(rows);
-        conn.close();
-    });
-});
-
 module.exports = {
-    fetchAccidents: function() {
-        pool.getConnection().then(conn => {
-            conn.query(
-                'SELECT test FROM test2 WHERE id = ? AND time = ?',
-                ['1, 2']
-                ).then(rows => {
-                //do something with the rows and return it
-            }).catch(err => {
-                conn.close();
-                console.log(err.stack);
-                return null;
-            });
-        }).catch(err => {
-            conn.close();
-            console.log(err.stack);
-            return null
-        });
+    fetchAccidents: function(cb) {
+        conn.query(
+            'SELECT test FROM test2 WHERE id = ? AND time = ?',
+            [1, 2],
+            cb
+        );
     },
     //TODOs
-    fetchAccident: function(accidentId) {},
-    voteForAccident: function(accidentId, up) {}, //(int, bool)
-    addAccident: function(accident) {}, //(object)
+    fetchAccident: function(accidentId, cb) {},
+    voteForAccident: function(accidentId, up, cb) {}, //(int, bool)
+    addAccident: function(accident, cb) {}, //(object)
 
-    fetchInspections: function() {},
-    fetchInspection: function(inspectionId) {},
-    voteForInspection: function(inspectionId, up) {},
-    addInspection: function(inspection) {}
+    fetchInspections: function(cb) {},
+    fetchInspection: function(inspectionId, cb) {},
+    voteForInspection: function(inspectionId, up, cb) {},
+    addInspection: function(inspection, cb) {}
 };
