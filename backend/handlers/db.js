@@ -37,7 +37,13 @@ module.exports = {
         });
     },
     //TODOs
-    fetchAccident: function(accidentId) {},
+    fetchAccident: function(accidentId) {
+      pool.getConnection().then(conn => {
+        conn.query(
+          `SELECT * FROM accidents a
+            JOIN stopline s ON a.stopline=s.id
+            JOIN 
+    },
     voteForAccident: function(accidentId, up) {}, //(int, bool)
     addAccident: function(accident) {}, //(object)
 
