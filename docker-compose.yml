@@ -10,7 +10,23 @@ services:
       - piast-db
   piast-db:
     build: ./database
-    #ports:
-    #  - 3306:3306
+    ports:
+      - 3306:3306
     volumes:
       - ./database/data:/var/lib/mysql
+  piast-db-backup:
+    depends_on:
+      - piast-db
+    image: jtilander/backup-db:latest
+    environment:
+      - DBTYPE=mariadb
+      - CONTAINER=piast-db
+      - USERNAME=root
+      - PASSWORD=password
+      - DBNAME=piastdb
+      - "CRONSCHEDULE=0 0 * * * *"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - ./backupdb:/mnt/backup/databases
+    command: cron
+
