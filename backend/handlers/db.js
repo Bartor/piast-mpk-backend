@@ -91,13 +91,13 @@ module.exports = {
     
     fetchLine: function(cb) {
         conn.query(
-            `SELECT * FROM line`,
+            `SELECT * FROM lines`,
             cb
         );
     },
     fetchStop: function(cb) {
         conn.query(
-            `SELECT * FROM stop`,
+            `SELECT * FROM stops`,
             cb
         );
     },
