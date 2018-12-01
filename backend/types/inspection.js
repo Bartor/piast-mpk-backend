@@ -1,8 +1,7 @@
 class Inspection {
-    constructor(stopline, rate, time, user) {
+    constructor(stopline, user) {
         this.stopline = stopline;
-        this.rate = rate;
-        this.time = time;
+        this.time = Math.round(new Date()/1000);
         this.user = user;
     }
 }

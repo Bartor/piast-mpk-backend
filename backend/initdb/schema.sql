@@ -50,4 +50,4 @@ create table if not exists piastmpk.inspection (
     on update restrict
 );
 create view if not exists ordered_stopline as
-  select * from stopline group by line order by ord;
+  select * from stopline group by line_id order by ord;

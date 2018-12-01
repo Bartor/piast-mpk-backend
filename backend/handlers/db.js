@@ -41,8 +41,8 @@ module.exports = {
     }, //(int, bool)
     addAccident: function(accident, cb) {
         conn.query(
-            `INSERT INTO accidents (stopline, FROM_UNIXTIME(time), user, description)
-                VALUES (?, ?, ?, ?)`,
+            `INSERT INTO accidents (stopline, time, user_id, description)
+                VALUES (?, FROM_UNIXTIME(?), ?, ?)`,
             [accident.stopline, accident.time, accident.user, accident.desctiption],
             cb
         )
@@ -50,14 +50,14 @@ module.exports = {
 
     fetchInspections: function(cb) {
         conn.query(
-            `SELECT * FROM inspections 
+            `SELECT * FROM inspection
                 WHERE TIMESTAMPDIFF(MINUTE, NOW(), time) < 30`,
             cb
         )
     },
     fetchInspection: function(inspectionId, cb) {
         conn.query(
-            `SELECT * FROM inspections a
+            `SELECT * FROM inspection a
                 JOIN stopline sl ON a.stopline=sl.id
                 JOIN line l ON sl.line_id=l.id
                 JOIN stop s ON sl.stop_id=s.id
@@ -71,15 +71,15 @@ module.exports = {
         conn.query(
             `UPDATE accidents SET rate = rate + (?) 
                 WHERE id=?`,
-            [up, accidentId],
+            [up, inspectionId],
             cb
         )
     },
     addInspection: function(inspection, cb) {
         conn.query(
-            `INSERT INTO inspections (stopline, FROM_UNIXTIME(time), user)
-                VALUES (?, ?, ?)`,
-            [accident.stopline, accident.time, accident.user],
+            `INSERT INTO inspection (stopline, time, user_id)
+                VALUES (?, FROM_UNIXTIME(?), ?)`,
+            [inspection.stopline, inspection.time, inspection.user],
             cb
         )
     }
